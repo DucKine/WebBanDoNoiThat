@@ -1,0 +1,210 @@
+﻿@model Model.Product
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var category = (Model.Product)ViewBag.Category;
+    String str = Model.Images + ";" + Model.MoreImages;
+
+    // using the method
+    String[] ListImages = new String[20];
+    ListImages = str.Split(';');
+    var listproductorther = (List<Model.Product>)ViewBag.ListProductOther;
+
+}
+@section footer{
+    <script src="~/Asset/FrontEnd/js/CartJs.js"></script>
+
+}
+
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i></a></li>
+            @*<li><a href="#"> Sofa</a></li>*@
+            <li class="active">@category.Name</li>
+        </ol>
+    </div>
+</div>
+<!-- breadcrumb end -->
+<!-- shop-area start -->
+<div class="shop-area">
+    @*<div class="row">
+            <div class="col-md-2 hidden-xs" style="float:right; margin-right:40px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Hỗ Trợ-Liên Hệ</div>
+                    <div class="panel-body">
+                        <h3>
+                            <a href="tel:0985846554" class="btn btn-danger">0985.846.554</a>
+                            <a href="tel:0989318744" class="btn btn-danger">0989.318.744</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-5">
+
+
+                <div class="product-zoom">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        @{int i = 0;}
+                        @foreach (var item in ListImages)
+                        {
+
+                            if (i == 0)
+                            {
+                                <div class="tab-pane active" id="@("item"+i)">
+                                    <div class="pro-large-img">
+                                        <img src="@item" alt="" />
+                                        <a class="popup-link" href="@item">Xem Ảnh <i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="tab-pane" id="@("item"+i)">
+                                    <div class="pro-large-img">
+                                        <img src="@item" alt="" />
+                                        <a class="popup-link" href="@item">Xem Ảnh <i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            }
+                            i++;
+
+                        }
+
+
+                    </div>
+                    <!-- Nav tabs -->
+                    <div class="details-tab">
+                        @{int i1 = 0;}
+                        @foreach (var item in ListImages)
+                        {
+
+                            if (i1 == 0)
+                            {
+                                <div class="active"><a href="@("#item"+i1)" data-toggle="tab"><img src="@item" /></a></div>
+                            }
+                            else
+                            {
+                                <div><a href="@("#item"+i1)" data-toggle="tab"><img src="@item" alt="" /></a></div>
+                            }
+                            i1++;
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-7">
+                <div class="product-details">
+                    <h2 class="pro-d-title">@Model.Name</h2>
+                </div>
+                <div class="price-box">
+                    <span class="price product-price">@Convert.ToDecimal(Model.Price).ToString("#,##0") VND</span>
+                </div>
+                <div class="short-desc">
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                </div>
+                <div class="box-quantity">
+                    <form action="">
+                        <label>Số Lượng:</label>
+                        <input type="number" name="quantity" class="qty" value="1" min="1" />
+
+                        <span style="visibility:hidden" class="pId">@Model.Id</span>
+                        <button class="AddToCartTest">Thêm Vào Giỏ Hàng</button>
+                    </form>
+                    @*<form action="#">
+                            <label>Quantity</label>
+                            <input type="number" value="1">
+                            <button>add to cart</button>
+                        </form>*@
+
+                </div>
+                <a href="tel:0989318744" style="background:red;margin-top:20px" class="btn btn-danger" <i class="glyphicon glyphicon-earphone"></i>Gọi Tư Vấn</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- shop-area end -->
+<!-- pro-info-area start -->
+<div class="pro-info-area ptb-80">
+    <div class="container">
+        <div class="pro-info-box">
+            <!-- Nav tabs -->
+            <!-- Tab panes -->
+
+        </div>
+    </div>
+</div>
+<!-- pro-info-area end -->
+<!-- best-sell-area start -->
+
+<div class="best-sell-area">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center mb-50">
+                <h2>Sản Phẩm Liên Quan</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="product-carousel">
+                @foreach (var item in listproductorther)
+                {
+                    var url = "/chi-tiet-san-pham/" + item.Slug + "-" + item.Id;
+                    <div class="col-md-12">
+                        <div class="product-wrapper mb-40 mrg-nn-xs">
+                            <div class="product-img">
+                                <a href="@url" class="zoomOut">
+                                    <figure>
+                                        <img src="@item.Images" alt="@item.Name"  />
+                                    </figure>
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <div class="pro-title">
+                                    <h3><a href="@url">@item.Name</a></h3>
+                                </div>
+                                <div class="price-reviews">
+                                    <div class="price-box">
+
+                                        @if (item.Sale_Price != null)
+                                        {
+                                            <span class="old-price product-price">
+                                                Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                VND
+                                            </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- best-sell-area end -->
+<!-- best-sell-area start -->
+<!-- best-sell-area end -->
+<!-- brand-area start -->
+@{Html.RenderAction("ShowProject", "Home");}
+<!-- brand-area end -->
+<!-- service-area start -->

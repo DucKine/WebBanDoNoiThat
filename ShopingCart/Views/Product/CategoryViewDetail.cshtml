@@ -1,0 +1,232 @@
+﻿@model List<Model.Product>
+@{
+    ViewBag.Title = "Danh Mục Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListCategory = (List<Model.Category>)ViewBag.ListCategory;
+    var category = (Model.Category)ViewBag.Category;
+
+}
+
+<<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li><a href="#">Trang Chủ</a></li>
+            <li class="active">Sản Phẩm</li>
+        </ol>
+    </div>
+</div>
+<!-- breadcrumb end -->
+<!-- shop-area start -->
+<div class="shop-area">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-3 col-sm-4">
+                <div class="column">
+                    <h2 class="title-block">Danh Mục Sản Phẩm</h2>
+                    @foreach (var item in ListCategory.Where(x => x.ParentID == null))
+                    {
+                        var url = "/danh-muc-san-pham/" + item.Slug + "-" + item.ID;
+                        var child = ListCategory.Where(x => x.ParentID == item.ID);
+                        <div class="sidebar-widget">
+                            <h3 class="sidebar-title"><a href="@url">@item.Name</a> </h3>
+                            @if (child.Count() > 0)
+                            {
+                                <ul class="sidebar-menu">
+                                    @foreach (var submenu in child)
+                                    {
+                                        var link = "/danh-muc-san-pham/" + submenu.Slug + "-" + submenu.ID;
+                                        <li><a href="@link">@submenu.Name</a></li>
+                                    }
+                                </ul>
+                            }
+
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            @if (Model.Count > 0)
+            {
+                <div class="col-md-9 col-sm-8">
+                    <h2 class="page-heading mt-40">
+                        <span class="cat-name">Tất Cả Sản Phẩm</span>
+                        <span class="heading-counter">@*Có Tất Cả @ListProduct.Count() Sản Phẩm*@</span>
+                    </h2>
+                    <div class="shop-page-bar">
+                        <div>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="row">
+                                        @foreach (var item in Model)
+                                        {
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="product-wrapper mb-40">
+                                                    <div class="product-img">
+                                                        <figure>
+                                                            <img src="@item.Images" alt="@item.Name" />
+                                                        </figure>
+                                                    </div>
+                                                    <div class="product-content">
+                                                        <div class="pro-title">
+                                                            <h3><a href="product-details.html">@item.Name</a></h3>
+                                                        </div>
+                                                        <div class="price-reviews">
+                                                            <div class="price-box">
+
+                                                                @if (item.Sale_Price != null)
+                                                                {
+                                                                    <span class="old-price product-price">
+                                                                        Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                                        VND
+                                                                    </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                        <a class="buttonss detail_button" href="" title="Xem chi tiết">
+                                                            Xem chi tiết
+                                                        </a>
+                                                        <a class="buttonss Addtocart" data-id="@item.Id">
+                                                            Đặt Mua
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
+
+
+                                    </div>
+                                </div>
+
+
+
+                                @*@if (ViewBag.TotalPage > 1)
+                                {
+                                    var pagDisplay = (int)(ViewBag.MaxPage);
+                                    int totalPage = (int)ViewBag.TotalPage;
+                                    int currentPage = ((int)ViewBag.Page);
+                                    var start = Math.Max(1, currentPage - pagDisplay / 2);
+                                    var end = Math.Min(totalPage, currentPage + pagDisplay / 2);
+
+                                    var url = "/danh-muc-san-pham/" + category.Slug + "-" + category.ID;
+
+
+                            <div class="content-sortpagiba0r">
+                                @if (currentPage > ViewBag.First)
+                                {
+                                    <li><a href="@url?page=@ViewBag.First"><i class="fa fa-angle-left"></i></a></li>
+                                    <li><a href="@url?Page=@ViewBag.Prev"><i class="fa fa-angle-right"></i></a></li>
+                                }
+                                @for (int i = start; i < end; i++)
+                                {
+                                    if (currentPage == i)
+                                    {
+                                        <li class="active"><a href="@url?page=@i">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@url?page=@i">@i</a></li>
+                                    }
+                                }
+                                @if (currentPage < totalPage)
+                                {
+                                    <li><a href="@url?page=@ViewBag.Next"><i class="fa fa-angle-left"></i></a></li>
+                                    <li><a href="@url?Page=@ViewBag.Last"><i class="fa fa-angle-right"></i></a></li>
+                                }
+
+                            </div>
+
+
+                                }
+                                else
+                                {
+                                    <p>Danh Mục Không Có Sản Phẩm</p>
+                                }*@
+
+
+
+
+
+                                <div style="text-align:center" class="content-sortpagiba0r">
+
+
+                                    @if (ViewBag.TotalPage > 1)
+                                    {
+                                        var pagDisplay = (int)(ViewBag.MaxPage);
+                                        int totalPage = (int)ViewBag.TotalPage;
+                                        int currentPage = ((int)ViewBag.Page);
+                                        var start = Math.Max(1, currentPage - pagDisplay / 2);
+                                        var end = Math.Min(totalPage, currentPage + pagDisplay / 2);
+                                        var pageSide = (int)ViewBag.PageSize;
+                                        var total = (int)ViewBag.Total;
+                                        var url = "/danh-muc-san-pham/" + category.Slug + "-" + category.ID;
+                                        <div class="product-count display-inline">Hiển Thị @pageSide - Trên Tổng Số @total Sản Phẩm</div>
+                                        <ul class="shop-pagi display-inline">
+
+                                            @if (currentPage > ViewBag.First)
+                                            {
+
+                                                <li><a href="@url?page=@ViewBag.First"><i class=""></i>&laquo;</a></li>
+
+                                                <li><a href="@url?Page=@ViewBag.Prev"><i class="fa fa-angle-left"></i></a></li>
+
+                                            }
+
+                                            @for (int i = start; i <= end; i++)
+                                            {
+                                                if (currentPage == i)
+                                                {
+                                                    <li><a style="background: #444444 none repeat scroll 0 0; color:orange" href="@url?page=@i">@i</a></li>
+                                                }
+                                                else
+                                                {
+
+                                                    <li><a href="@url?page=@i">@i</a></li>
+                                                }
+                                            }
+
+                                            @if (currentPage < totalPage)
+                                            {
+                                                <li><a href="@url?page=@ViewBag.Next"><i class="fa fa-angle-right"></i></a></li>
+                                                <li><a href="@url?Page=@ViewBag.Last"><i class=""></i>&raquo;</a></li>
+                                            }
+
+                                        </ul>
+
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Danh Mục Không Có Sản Phẩm</p>
+            }
+
+
+        </div>
+    </div>
+</div>
+<!-- shop-area end -->
+<!-- brand-area start -->
+@{Html.RenderAction("ShowProject", "Home");}
+<!-- brand-area end -->
+<!-- service-area start -->

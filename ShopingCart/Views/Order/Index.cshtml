@@ -1,0 +1,167 @@
+﻿@model Model.Order
+@{
+	ViewBag.Title = "Chi Tiết Hóa Đơn";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var items = (List<Model.CartItem>)Session["SESSION_CART"];
+	double? TotalMoney = 0;
+	double? currentTotal = 0;
+	double? price;
+}
+
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Shop</a></li>
+			<li class="active">Checkout</li>
+		</ol>
+	</div>
+</div>
+@if (Session["User"] == null)
+{
+<div class="alert alert-warning">
+	<p style="text-align: center">Mời bạn đăng nhập để có thể đặt hàng</p>
+	<a class="btn btn-primary" href="@Url.Action("Index","Login")">Đăng nhập</a>
+</div>
+	
+	
+}
+else if (Session["SESSION_CART"] == null)
+{
+	<div class="alert alert-warning">
+		<p style="text-align: center">Giỏ hàng trống! Mời bạn chọn sản phẩm</p>
+	</div>
+	
+}
+else
+{
+
+	<!-- breadcrumb end -->
+	<!-- coupon-area start -->
+	<div class="coupon-area">
+		<div class="container">
+			<div class="row">
+				
+			</div>
+		</div>
+	</div>
+	<!-- coupon-area end -->
+	<!-- checkout-area start -->
+	<div class="checkout-area">
+		<div class="container">
+			<div class="row">
+				@using (Html.BeginForm()) 
+				{
+					<div class="col-lg-6 col-md-6">
+						<div class="checkbox-form">
+							<h3>Thông tin giao nhận hàng</h3>
+							<div class="row">
+								<input hidden name="User_ID" value="@ViewBag.User.UserId" />
+								<div class="col-md-12">
+									<div class="checkout-form-list">
+										<label> Tên người nhận</label>
+										<input type="text" name="Name" value="@ViewBag.User.FullName" placeholder="" />
+										@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="checkout-form-list">
+										<label>Email</label>
+										<input type="text" name="Email" id="email" value="@ViewBag.User.Email" placeholder="" />
+										@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger",@readonly="readonly"})
+                                        
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="checkout-form-list">
+										<label>Số điện thoại</label>
+										<input type="text" name="Phone" value="@ViewBag.User.Phone" placeholder="" />
+										@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="checkout-form-list">
+										<label>Địa chỉ <span class="required">*</span></label>
+										<input type="text" name="Address" value="@ViewBag.User.Address" placeholder="Street address" />
+										@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+									</div>
+								</div>
+
+								
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="your-order">
+							<h3>Chi tiết đơn hàng</h3>
+							<div class="your-order-table table-responsive">
+								<table>
+									<thead>
+										<tr>
+											<th class="product-name">Tên sản phẩm</th>
+											<th class="product-name">Đơn giá</th>
+											<th class="product-total">Hình ảnh</th>
+											<th class="product-total">Tổng tiền</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										@foreach (var item in items)
+										{
+											price = (item.Product.Price >  item.Product.Sale_Price) ? item.Product.Sale_Price : item.Product.Price;
+											TotalMoney += (price * item.Quantity);
+											currentTotal=(price * item.Quantity);
+											
+										<tr class="cart_item">
+											<td class="product-name">
+												@item.Product.Name <strong class="product-quantity"> × @item.Quantity</strong>
+											</td>
+											<td class="product-name">
+												@price VND
+											</td>
+											<td class="product-name">
+												<img style="width: 100px" src="@item.Product.Images" alt="Alternate Text" />
+											</td>
+											<td class="product-total">
+												<span class="amount"> @currentTotal VND</span>
+											</td>
+										</tr>
+										}
+									</tbody>
+									<tfoot>
+										
+										<tr class="order-total">
+											<th>Tổng tiền đơn hàng</th>
+											<td>
+												<strong><span class="amount">@TotalMoney VND</span></strong>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<div class="order-button-payment">
+								<input type="submit" value="Đặt hàng" />
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+	<!-- checkout-area end -->
+	<!-- service-area start -->
+
+	<!-- service-area end -->
+	
+	<!-- footer end -->
+	<!-- Modal -->
+	
+	<!-- Modal end -->
+}
+
+<!-- header end -->

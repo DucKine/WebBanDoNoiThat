@@ -1,0 +1,85 @@
+﻿
+
+@model IEnumerable<Model.News>
+
+@{
+    ViewBag.Title = "Danh Sách Tin Tức";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<div class="box">
+    <h2 style="text-align:center">Quản lý Tin Tức</h2>
+    <p>
+        <a class="btn btn-primary" href="@Url.Action("Create")">Tạo mới</a>
+    </p>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Images)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Summary)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+
+                    <td width="50px">
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td width="200px">
+                        <img style="width:150px;" src="@Html.DisplayFor(modelItem => item.Images)" alt="Alternate Text" />
+                    </td>
+                    <td width="400px">
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                    <td width="400px">
+                        @Html.Raw(HttpUtility.HtmlDecode(item.Content))
+                        
+                    </td>
+
+                    <td width="100px">
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td width="100px">
+
+                        @if (item.Status == true)
+                        {
+                            <span class="label label-success">Hiện</span>
+                        }
+                        else
+                        {
+                            <span class="label label-danger">Ẩn</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" style="font-size:10px;" href="@Url.Action("Edit", new { id=item.ID })"><i class="fa fa-fw  fa-pencil"></i></a>
+                        <a class="btn btn-danger" style="margin-left:10px;font-size:10px;" href="@Url.Action("Delete", new { id=item.ID })"><i class="fa fa-fw fa-trash"></i></a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

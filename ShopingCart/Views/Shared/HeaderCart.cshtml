@@ -1,0 +1,56 @@
+﻿@model List<Model.CartItem>
+  @{ 
+        double TotalMoney = 0;
+  }
+    <div class="shopping-cart ml-20 display-inline">
+        <a id="" href="/cart"><b>shopping cart</b>@Model.Count</a>
+        @if (Model.Count > 0)
+        {
+           
+    <ul>
+        @foreach (var item in Model)
+        {
+             var url = "/chi-tiet-san-pham/" + item.Product.Slug + "-" + item.Product.Id;
+            var price = item.Product.Price = (item.Product.Sale_Price != null && item.Product.Sale_Price < item.Product.Price) ? float.Parse(item.Product.Sale_Price.ToString()) : float.Parse(item.Product.Price.ToString());
+            var total = (price * item.Quantity);
+            TotalMoney += total;
+    <li>
+        <div class="cart-img">
+            <a href="@url"><img width='100px' src="@item.Product.Images" alt="@item.Product.Name" /></a>
+        </div>
+        <div class="cart-content">
+            <h3 style="font-size:20px; color:chocolate">@item.Quantity</h3>
+            <span><b>@item.Product.Name</b></span>
+            <span class="cart-price">@Convert.ToDecimal(price).ToString("#,##0") VND</span>
+        </div>
+        <div class="cart-del">
+            <a data-id="@item.Product.Id" class="btn-delete"><i class="fa fa-times-circle"></i></a>
+        </div>
+    </li>
+
+
+}
+
+        <li>
+            <hr class="shipping-border" />
+            <div class="shipping">
+                <span class="f-left"> Tổng Tiền: @Convert.ToDecimal(TotalMoney).ToString("#,##0") VND</span>
+                <span class="f-right cart-price"></span>
+            </div>
+        </li>
+        @Html.ActionLink("Thanh Toán", "Index", "Order")
+
+    </ul>
+        }
+        else
+        {
+            <ul>
+                        <li>
+                        <div class="cart-content">
+                            <span><b>Giỏ hàng trống</b></span>
+                        </div>
+                    </li>
+            </ul>
+        }
+
+    </div>

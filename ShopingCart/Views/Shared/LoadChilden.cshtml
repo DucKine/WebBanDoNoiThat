@@ -1,0 +1,14 @@
+﻿@model List<Model.Category>
+@if ((int)ViewBag.Count > 0)
+{
+
+    <ul class="submenu ">
+        @foreach (var item in Model)
+        {
+             var url = "/danh-muc-san-pham/" + item.Slug + "-" + item.ID;
+            <li><a href="@url">@item.Name</a></li>
+            @Html.Action("LoadChilden", "Home", new { parentID = item.ID })
+        }
+
+    </ul>
+}

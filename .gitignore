@@ -1,0 +1,11 @@
+.vs/
+/DAL/bin
+/DAL/obj
+/Model/bin
+/Model/obj
+/Repository/obj
+/Repository/bin
+/Service/bin
+/Service/obj
+/ShopingCart/obj
+/ShopingCart/bin

@@ -1,0 +1,25 @@
+﻿@model List<Model.Projected>
+
+    <div class="brand-area">
+        <div class="container">
+            <div class="brand-sep ptb-50">
+                <div class="row">
+                    <div class="section-title text-center mb-50">
+                        <h2>Dự Án Đã Thi Công</h2>
+                    </div>
+                    <div class="brand-active">
+                        @foreach ( var item in Model)
+                        {
+                             var url = "/thi-cong/" + item.Slug + "-" + item.ID;
+                            <div class="col-lg-12">
+                                <div class="single-brand">
+                                    <a href="@url"><img src="@item.Images" alt="" /></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

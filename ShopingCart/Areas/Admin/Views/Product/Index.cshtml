@@ -1,0 +1,172 @@
+﻿@model PagedList.IPagedList<Model.Product>
+@using PagedList.Mvc
+
+@{
+
+    ViewBag.Title = "Danh Sách Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="box">
+    <h2 style="text-align:center">Quản lý sản phẩm</h2>
+    <p>
+        <a class="btn btn-primary" href="@Url.Action("Create")">Tạo mới</a>
+    </p>
+    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" placeholder="tìm kiếm theo tên" name="searchString" value="@ViewBag.searchString" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    }
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Tên danh mục
+                    </th>
+                    <th>
+                        Tên sản phẩm
+                    </th>
+                    <th>
+                        Slug
+                    </th>
+                    <th>
+                        Nội dung
+                    </th>
+                    <th>
+                        Hình ảnh
+                    </th>
+                    <th>
+                        Giá gốc
+                    </th>
+                    <th>
+                        Giá khuyến mãi
+                    </th>
+
+                    <th>
+                        Ngày tạo
+                    </th>
+                    <th>
+                        Ngày sửa
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>
+                        Sản phẩm hot
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Categorys.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Slug)
+                        </td>
+                        <td width="200px">
+                            @Html.Raw(HttpUtility.HtmlDecode(item.Content))
+                        </td>
+                        <td>
+                            <img style="width:150px" src="@Html.DisplayFor(modelItem => item.Images)" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sale_Price)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifileDate)
+                        </td>
+                        <td>
+                            @if (item.Status)
+                            {
+                                <span class="label label-success">Hiện</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Ẩn</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.TopHot)
+                            {
+                                <span class="label label-success">Hiện</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Ẩn</span>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" style="font-size:10px;" href="@Url.Action("Edit", new { id=item.Id })"><i class="fa fa-fw  fa-pencil"></i></a>
+                            <a class="btn btn-danger" style="font-size:10px;" href="@Url.Action("Delete", new { id=item.Id })"><i class="fa fa-fw fa-trash"></i></a>
+                            @*<a class="btn btn-danger" style="font-size:10px;" href="@Url.Action("Detail", new { id=item.Id })"><i class="glyphicon glyphicon-eye-open"></i></a>*@
+
+                            <a  class="btn btn-success modalLink" style="font-size:10px;" data-toggle="modal"
+                                 data-target="#exampleModalCenter" data-id="@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
+                       
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, @searchString = @ViewBag.searchString }))
+        <!-- Button trigger modal -->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @Html.TextArea("id", "", new { @class = "hiddenid" })
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+        $(document).on("click", ".modalLink", function () {
+            var passedid = $(this).data('id');
+
+            debugger;
+            $(".modal-content .hiddenid").val(passedid);
+
+        });
+    </script>
+}

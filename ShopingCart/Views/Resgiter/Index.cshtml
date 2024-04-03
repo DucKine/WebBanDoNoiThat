@@ -1,0 +1,112 @@
+﻿@model Model.User
+@using BotDetect.Web.Mvc;
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+	  rel="stylesheet" type="text/css" />
+@{ MvcCaptcha registerCaptcha = new MvcCaptcha("registerCaptcha");}
+@{
+	ViewBag.Title = "Đăng Ký";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+	.resgiter{
+		width:100%;
+	}
+</style>
+
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Trang Chủ</a></li>
+			<li class="active">Đăng Ký Tài Khoản</li>
+		</ol>
+	</div>
+</div>
+<!-- breadcrumb end -->
+<!-- login-area start -->
+<div class="login-area mb-50">
+	<div class="container">
+		<div class="row">
+			<div class="centered-title text-center mb-40">
+				<h2>Đăng  <span class="light-font">Ký</span></h2>
+				<div class="clear"></div>
+			
+			</div>
+			<div class="clear"></div>
+			@using (Html.BeginForm())
+			{
+				@Html.AntiForgeryToken()
+				<div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+					<div class="billing-fields row">
+						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+						<input type="text" name="Status" value="true" hidden />
+						<input type="text" name="UserId" value="1" hidden />
+						<input type="text" name="RoleId" value="1" hidden />
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+
+							@Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+						</p>
+
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+						</p>
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+						</p>
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+						</p>
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+						</p>
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+						</p>
+						<p class="form-row col-sm-12">
+							@Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2 resgiter" })
+							@Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+						</p>
+						<div class="col-sm-12">
+							@Html.Captcha(registerCaptcha)
+							@Html.ValidationMessage("CaptchaCode", new { @class = "text-danger" })
+							@Html.TextBox("CaptchaCode")
+
+						</div>
+						<p class="col-sm-12">
+							<input type="submit" value="Đăng Ký" name="signup" class="theme-button marL0">
+						</p>
+					</div>
+				</div>
+				<!-- /.col-md-6 -->
+			}
+			<div class="col-md-6 marTB30"></div>
+			<!-- /.col-md-6 -->
+		</div>
+		<!-- /.row -->
+	</div>
+</div>
+<!-- login-area end -->
+<!-- service-area start -->
+@section footer{
+	@Scripts.Render("~/bundles/jqueryval");
+}
+
+

@@ -1,0 +1,328 @@
+﻿@using Model
+@model IEnumerable<Model.Product>
+@{
+    ViewBag.Title = "Trang Chủ-Nội Thất Hồng Ngọc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listproducthot = (List<Model.Product>)ViewBag.ListProductHot;
+    var ListProductNew = (List<Model.Product>)ViewBag.ListProductNew;
+    var user = (User)Session["User"];
+    var ListNotInUser = (List<int>)ViewBag.ListNotInUser;
+    var listNews = (List<Model.News>)ViewBag.ListNews;
+    var listbanner = (List<Model.Banner>)ViewBag.ListBanner;
+    var listprosale = (List<Model.Product>)ViewBag.ListProductSale;
+}
+@section footer{
+    <script src="~/Asset/FrontEnd/js/WishList.js"></script>
+    <script src="~/Asset/FrontEnd/js/CartJs.js"></script>
+}
+<!-- header end -->
+<!-- slider-container start -->
+@{Html.RenderAction("Slider", "Home");}
+<!-- slider-container end -->
+<!-- banner-area start -->
+<div class="banner-area pt-70">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in listbanner)
+            {
+                <div class="col-md-6 col-sm-6">
+                    <div class="single-banner wow slideInUp">
+                        <a href="@item.Link"><img src="@item.Images" alt="" /></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- banner-area end -->
+<!-- new-arrival-area start -->
+<div class="new-arrival-area pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center mb-20">
+                <h2>Sản Phẩm Nổi Bật</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-tab">
+                    <!-- Nav tabs -->
+                    <!-- Tab panes -->
+                    <div class="row">
+
+                        <div class="tab-content reload-wish">
+                            @foreach (var item in Model)
+                            {
+                                var url = "/chi-tiet-san-pham/" + item.Slug + "-" + item.Id;
+                                <div class="col-md-3">
+                                    <div class="product-wrapper mb-40  ">
+                                        <div class="product-img">
+                                            <a href="@url" class="zoomOut">
+                                                <figure>
+                                                    <img src="@item.Images" alt="@item.Name" />
+                                                </figure>
+                                            </a>
+                                            @{ if (item.TopHot)
+                                                {
+                                                    <span class="new-label-hot">Hot</span>
+                                                }
+                                                else
+                                                {
+                                                    <span></span>
+                                                }
+                                            }
+                                            @*<div class="product-action">
+                                                    <a class="Addtocart" data-id="@item.Id" ><i class="pe-7s-cart"></i></a>
+                                                    @if (user == null)
+                                                    {
+                                                        if (ListNotInUser != null && ListNotInUser.Any(x => x.Equals(item.Id)))
+                                                        {
+                                                            <a class="wishlistDisLike" data-id="@item.Id" href="#"><i style="color: red" class="pe-7s-like"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="wishlist" data-id="@item.Id" href="#"><i class="pe-7s-like"></i></a>
+                                                        }
+                                                    }
+                                                    else if (wishList.Any(x => x.ProductID.Equals(item.Id)))
+                                                    {
+                                                        <a class="wishlistDisLike" data-id="@item.Id" href="#"><i style="color: red" class="pe-7s-like"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="wishlist" data-id="@item.Id" href="#"><i class="pe-7s-like"></i></a>}
+
+                                                    <a href="#" data-toggle="modal" data-target="#productModal"><i class="pe-7s-look"></i></a>
+                                                </div>*@
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="pro-title">
+                                                <h3><a href="@url">@item.Name</a></h3>
+                                            </div>
+                                            <div class="price-reviews">
+                                                <div class="price-box">
+
+                                                    @if (item.Sale_Price != null)
+                                                    {
+                                                        <span class="old-price product-price">
+                                                            Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                            VND
+                                                        </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <a class="buttonss detail_button" href="@url" title="Xem chi tiết">
+                                                Xem chi tiết
+                                            </a>
+                                            <a class="buttonss Addtocart" data-id="@item.Id">
+                                                Đặt Mua
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- new-arrival-area end -->
+<!-- newsletter-area start -->
+<!-- newsletter-area end -->
+<!-- best-sell-area start -->
+<div class="best-sell-area pt-30">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center mb-50">
+                <h2>Sản Phẩm Mới Nhất</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-tab">
+                    <!-- Nav tabs -->
+                    <!-- Tab panes -->
+                    <div class="row">
+                        <div class="tab-content">
+                            @foreach (var item in ListProductNew)
+                            {
+                                var url = "/chi-tiet-san-pham/" + item.Slug + "-" + item.Id;
+                                <div class="col-md-3">
+                                    <div class="product-wrapper mb-40">
+                                        <div class="product-img">
+                                            <a href="@url" class="zoomOut">
+                                                <figure>
+                                                    <img src="@item.Images" alt="@item.Name" />
+                                                </figure>
+                                            </a>
+                                            <span style="  background: #6dcff6 none repeat scroll 0 0;
+                                                    color: #fff;
+                                                    font-size: 12px;
+                                                    font-weight: 600;
+                                                    left: 0;
+                                                    line-height: 25px;
+                                                    min-width: 60px;
+                                                    position: absolute;
+                                                    text-align: center;
+                                                    text-transform: uppercase;
+                                                    top: 18px;
+                                                    z-index: 100;" class="new-label-new">New</span>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="pro-title">
+                                                <h3><a href="@url">@item.Name</a></h3>
+                                            </div>
+                                            <div class="price-reviews">
+                                                <div class="price-box">
+
+                                                    @if (item.Sale_Price != null)
+                                                    {
+                                                        <span class="old-price product-price">
+                                                            Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                            VND
+                                                        </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <a class="buttonss detail_button" href="@url" title="Xem chi tiết">
+                                                Xem chi tiết
+                                            </a>
+                                            <a class="buttonss Addtocart" data-id="@item.Id">
+                                                Đặt Mua
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="best-sell-area pt-30">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center mb-50">
+                <h2>Sản Phẩm Giảm Giá</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-tab">
+                    <!-- Nav tabs -->
+                    <!-- Tab panes -->
+                    <div class="row">
+                        <div class="tab-content">
+                            @foreach (var item in listprosale)
+                            {
+
+                                var sale = Math.Ceiling(Convert.ToDecimal((item.Price - item.Sale_Price) / item.Price) * 100);
+
+                                var url = "/chi-tiet-san-pham/" + item.Slug + "-" + item.Id;
+                                <div class="col-md-3">
+                                    <div class="product-wrapper mb-40">
+                                        <div class="product-img">
+                                            <a href="@url" class="zoomOut">
+                                                <figure>
+                                                    <img src="@item.Images" alt="@item.Name" />
+                                                </figure>
+                                            </a>
+                                            <span class="sale">-@sale%</span>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="pro-title">
+                                                <h3><a href="@url">@item.Name</a></h3>
+                                            </div>
+                                            <div class="price-reviews">
+                                                <div class="price-box">
+
+                                                    @if (item.Sale_Price != null)
+                                                    {
+                                                        <span class="old-price product-price">
+                                                            Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                            VND
+                                                        </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <a class="buttonss detail_button" href="@url" title="Xem chi tiết">
+                                                Xem chi tiết
+                                            </a>
+                                            <a class="buttonss Addtocart" data-id="@item.Id">
+                                                Đặt Mua
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- best-sell-area end -->
+<!-- latest-blog-area start -->
+<div class="latest-blog-area ptb-60">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center mb-50">
+                <h2>Tin Tức Mới Nhất</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blog-active wow slideInUp " data-wow-duration="3s">
+                @foreach (var item in listNews)
+                {
+                    var url = "/chi-tiet-tin-tuc/" + item.Slug + "-" + item.ID;
+                    <div class="col-lg-12">
+                        <div class="blog-wrapper mb-40">
+                            <div class="blog-img imgnew">
+                                <a href="@url"><img src="@item.Images" alt="" /></a>
+                            </div>
+                            <div class="blog-info">
+                                <h3><a href="@url">@item.Summary</a></h3>
+                                <div class="blog-meta">
+                                    <span class="f-left">@item.CreateDate</span>
+                                    <span class="f-right"><a href="@url">Xem Thêm </a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- latest-blog-area end -->
+<!-- brand-area start -->
+@{Html.RenderAction("ShowProject", "Home");}
+<!-- brand-area end -->
+<!-- service-area start -->
+<!-- service-area end -->
+<!-- footer start -->

@@ -1,0 +1,68 @@
+﻿
+
+@model IEnumerable<Model.Baogia>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="box">
+    <h2 style="text-align:center">Quản lý báo giá</h2>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                      Phone
+                    </th>
+                    <th>
+                        Content
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td>
+                            @if (item.Status == 0)
+                            {
+                                <span class="label label-success">Chưa Tiếp Nhận</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Đã Nhận</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </td>
+
+                        <td>
+                            <a class="btn btn-primary" style="font-size:10px;" href="@Url.Action("Edit", new { id=item.ID })"><i class="fa fa-fw  fa-pencil"></i></a>
+                            <a class="btn btn-danger" style="margin-left:10px;font-size:10px;" href="@Url.Action("Delete", new { id=item.ID })"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

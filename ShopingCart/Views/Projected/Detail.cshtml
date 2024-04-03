@@ -1,0 +1,159 @@
+﻿@model Model.Projected
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section footer{
+    <script src="~/Asset/FrontEnd/js/Baogia.js"></script>
+}
+<div class="container">
+    <div class="row detailproject">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="entry-content">
+                    <div class="row">
+                        <aside class="col-sm-5 border-right">
+                            <article class="gallery-wrap">
+                                <div class="img-big-wrap wow zoomIn" style="visibility: visible; animation-name: zoomIn;">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <img src="@Model.Images" style="width:350px" alt="@Model.Name" />
+                                    </div>
+                                </div>
+                            </article>
+                        </aside>
+                        <aside class="col-sm-7">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"> Khách hàng: <span class="badge badge-light"> @Model.Customer </span></li>
+                                <li class="list-group-item"> Địa điểm: <span class="badge badge-light"> @Model.Address </span></li>
+                                <li class="list-group-item"> Hoàn thành: <span class="badge badge-light"> @Model.finish </span></li>
+                            </ul>
+                            <div class="btn-group mt-5" role="group" aria-label="Basic example">
+                                <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-warning"> <span class="oi oi-envelope-closed"> </span>&nbsp;Nhận báo giá </button>
+                                <button type="button" class="btn btn-danger"> <span class="oi oi-phone"> </span>&nbsp;Gọi tư vấn </button>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mt-5">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> Thông Tin </a></li>
+                            </ul>
+                            <div class="tab-content pt-3" id="myTabContent">
+                                <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <h1 class="entry-title card-title h2">
+                                        @Model.Name
+                                    </h1>
+                                    <div class="col-md-12">
+                                        @if (Model.MoreImages != null)
+                                        {
+                                            <img src="@Model.MoreImages" style="width:100%; margin-top:20px" alt="@Model.Name" />
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </div>
+                                    <p>
+                                        @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                                    </p>
+                                    <p>– Cám ơn quý khách đã luôn ủng hộ chúng tôi!</p>
+                                    <p>– ➡️Liên Hệ Ngay Nội Thất Hồng Ngọc</p>
+                                    <p>– ☎️Hotline: 0989 318 744 – 0915 092 271</p>
+                                    <p>– 📌Fanpage: facebook.com/noithatphuctho999</p>
+                                    <p>– 📬Email: tubephongngoc@gmail.com</p>
+                                    <p>– 🏠 Xưởng Sx: Hát Môn – Phúc Thọ – Hà Nội</p>
+                                    <p>&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+                <div class="wp-bp-sidebar-width all-sidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+                    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+                        <aside id="secondary" class="widget-area sidebar-1-area card shadow-sm">
+                            <section id="search-5" class="widget border-bottom widget_search">
+
+                                @using (Html.BeginForm("ResultSearch", "Search", FormMethod.Get))
+                                {
+                                    <div class="input-group">
+                                        <input type="text" name="searchString" class="form-control" placeholder="Tìm Kiếm Sản Phẩm">
+                                        <div class="input-group-append">
+                                            <button class=" session">Tìm Kiếm</button>
+                                        </div>
+                                    </div>
+
+                                }
+
+
+                            </section>
+                            <section id="custom_html-3" class="widget_text widget border-bottom widget_custom_html">
+                                <h5><span class="badge badge-light">Hỗ trợ – Liên hệ nhanh</span></h5>
+                                <div class="textwidget custom-html-widget">
+                                    <h3 class="hotline">
+                                        <a href="tel:0989318744" class="texts">
+                                            <span class="oi oi-phone">
+                                                0989 318 744
+                                            </span>
+                                        </a>
+                                    </h3>
+                                    <h3 class="hotline">
+                                        <a href="tel:0985846554" class="texts">
+                                            <span class="oi oi-phone">
+
+                                            </span> 0985 846 554
+                                        </a>
+                                    </h3>
+                                    <h5>
+                                        <a href="mailto:tubephongngoc@gmail.com" class="badge badge-light">
+                                            <span class="oi oi-envelope-closed">
+                                            </span> tubephongngoc@gmail.com
+                                        </a>
+                                    </h5>
+                                    <a href="#!" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger" rel="noopener noreferrer">Báo giá qua Email</a>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quý khách vui lòng điền vào form dưới đây!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="Frombaogia" method="post">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Họ Tên:</label>
+                        <input type="text" class="form-control" name="name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Số Điện Thoại:</label>
+                        <input type="text" class="form-control" name="phone" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Yều Cầu:</label>
+                        <textarea class="form-control" name="message" id="message"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="SendNow" class="btn btn-primary">Gửi Thông Tin</button>
+            </div>
+        </div>
+    </div>
+</div>

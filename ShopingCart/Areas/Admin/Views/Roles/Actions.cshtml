@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<Model.Action>
+@using PagedList.Mvc
+@{
+	ViewBag.Title = "Actions";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="box">
+	<div class="box-body">
+		<ul class="nav nav-tabs">
+			<li><a href="@Url.Action("DetailRole", "Roles", new { id = @ViewBag.RoleId })">Danh sách Action trong Roles @ViewBag.Role.RoleName</a></li>
+			<li class="active"><a href="@Url.Action("Actions", "Roles", new { id = @ViewBag.RoleId })">Danh sách Action</a></li>
+		</ul>
+		<h2 style="text-align:center">Danh sách Action</h2>
+		@using (Html.BeginForm("Actions", "Roles", FormMethod.Get))
+		{
+			<div class="row">
+				<div class="col-md-2">
+					<input type="text" placeholder="tìm kiếm tên Actions" name="searchString" value="@ViewBag.searchString" />
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+				</div>
+				<div class="col-md-6">
+
+				</div>
+			</div>
+		}
+		@using (@Html.BeginForm("AddActions", "Roles", FormMethod.Post))
+		{
+			<div class="box-body">
+				<button class="btn btn-primary" style="float:right" type="submit">Thêm Actions</button>
+				<table id="example1" class="table table-bordered table-hover">
+					<thead>
+						<tr role="row">
+							<th><input name="ListAdd" class="ListAdd" type="checkbox" /></th>
+							<th>
+								Tên action
+							</th>
+							<th>
+								Mô tả
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td><input name="checkbox" value="@item.ActionId" type="checkbox" /></td>
+								<td>
+									@Html.DisplayFor(currentItem => item.ActionName)
+								</td>
+								<td>
+									@Html.DisplayFor(currentItem => item.Description)
+								</td>
+
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+		@Html.PagedListPager(Model, Page => Url.Action("Actions", new { Page, @searchString = @ViewBag.searchString }))
+		<div>
+			<a class="btn btn-primary" href="@Url.Action("Index")">Quay về</a>
+		</div>
+
+	</div>
+</div>
+
+

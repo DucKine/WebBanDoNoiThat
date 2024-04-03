@@ -1,0 +1,12 @@
+﻿@model List<Model.Slider>
+
+<div class="slider-container">
+    <!-- Slider Image -->
+    <div id="mainSlider" class="nivoSlider slider-image">
+        @foreach (var item in Model)
+        {
+            <img src="@item.Images" alt="" title="" />
+        }
+
+    </div>
+</div>

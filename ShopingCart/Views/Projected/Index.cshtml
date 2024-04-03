@@ -1,0 +1,53 @@
+﻿@model PagedList.IPagedList<Model.Projected>
+@using Model;
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Dự án Thi Công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="">
+    <div style="background:#333;padding:120px;margin-top:140px;clear:both" class="box">
+        <h2 style="text-align:center" class="breadcrumb-title text-white uppercase">Dự Án Thi Công</h2>
+
+    </div>
+
+</div>
+@*314159236*@
+<div class="container">
+    <div class="row project">
+        @foreach (var item in Model)
+        {
+             var url = "/thi-cong/" + item.Slug + "-" + item.ID;
+            <div class="col-md-4 mb-3 mb-md-0 archive-card">
+                <article id="post-1929" class="card mb-md-4 shadow-sm bg-light text-center wow zoomIn post-1929 project type-project status-publish hentry" style="visibility: visible; animation-name: zoomIn;">
+                    <a href="@url" title="Xem Chi Tiết">
+                        <img src="@item.Images" class="card-img-top wp-bp-feat-card-img rounded-top" alt="">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <a href="@url" class="btn btn-warning btn-sm mb-1">
+                            <span class="glyphicon glyphicon-eye-open"></span> Xem chi tiết
+                        </a>
+                    </div>
+                    <ul class="list-group list-group-flush text-left">
+                        <li class="list-group-item">
+                            <span class="badge badge-light"> Khách hàng:@item.Customer </span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge badge-light"> Địa điểm:@item.Address</span>
+                        </li>
+                        <li class="list-group-item"> <span class="badge badge-light"> Hoàn thành:@item.finish </span></li>
+                    </ul>
+                </article>
+            </div>
+        }
+
+    </div>
+    <div style="text-align:center" class="dlink">
+        Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+    </div>
+</div>
+

@@ -1,0 +1,141 @@
+﻿@model  IEnumerable<Model.ViewModel.OrderDetailDTO>
+
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+	double total = 0;
+}
+
+	<div class="box">
+		<h2 style="text-align:center"><div class="panel-heading">Thông tin khách Hàng</div></h2>
+
+		<div class="box-body">
+
+			<div>
+				<div>
+					<form method="POST">
+						<div class="panel panel-title">
+							
+							<div class="panel-body">
+								<table class="table">
+
+									<tbody>
+										<tr>
+											<td>Tên khách hàng</td>
+											<td>Ngày đặt hàng</td>
+											<td>Số điện thoại</td>
+											<td>Địa chỉ</td>
+											<td>Email</td>
+
+										</tr>
+										<tr>
+											<td>@ViewBag.Order.Name</td>
+											<td>@ViewBag.Order.Created</td>
+											<td>@ViewBag.Order.Phone</td>
+											<td>@ViewBag.Order.Address</td>
+											<td>@ViewBag.Order.Email</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<input name="Name" hidden="hidden" value="@ViewBag.Order.Name" />
+						<input name="Created" hidden="hidden" value="@ViewBag.Order.Created" />
+						<input name="Phone" hidden="hidden" value="@ViewBag.Order.Phone" />
+						<input name="Address" hidden="hidden" value="@ViewBag.Order.Address" />
+						<input name="Email" hidden="hidden" value="@ViewBag.Order.Email" />
+
+						@if (ViewBag.Order.Status == 0)
+						{
+							<input hidden name="Status" value="1" />
+							<p>
+								Trạng thái giao hàng: <label class="btn btn-primary">Đang chờ</label>
+								Xử lý <button type="submit" value="1" class="btn btn-primary">Xác nhận</button>
+							</p>
+						}
+						else if (ViewBag.Order.Status == 1)
+						{
+							<input hidden name="Status" value="2" />
+							<p>
+								Trạng thái giao hàng:  <label class="btn btn-primary">Xác Nhận</label>
+								Xử lý <button type="submit" value="2" class="btn btn-primary">Đang giao</button>
+							</p>
+						}
+						else if (ViewBag.Order.Status == 2)
+						{
+							<input hidden name="Status" value="3" />
+							<p>
+								Trạng thái giao hàng:  <label class="btn btn-primary">Đang giao</label>
+								Xử lý <button type="submit" class="btn btn-primary">Đã giao</button>
+							</p>
+						}
+						else
+						{
+							<p>
+								Trạng thái giao hàng:  <label class="btn btn-primary">Hoàn thành</label>
+
+							</p>
+						}
+
+					</form>
+				</div>
+				<h2 style="text-align:center">Chi tiết đơn hàng</h2>
+				<table class="table table-hover">
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Oder_ID)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.NameProduct)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Images)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Price)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Quantity)
+						</th>
+						<th>
+							Tổng tiền
+						</th>
+
+					</tr>
+
+					@foreach (var item in Model)
+					{
+						total += item.Price * item.Quantity;
+						var currentTotal = item.Price * item.Quantity;
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.Oder_ID)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.NameProduct)
+							</td>
+							<td>
+								<img style="width:150px" src="@Html.DisplayFor(modelItem => item.Images)" alt="Alternate Text" />
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Price) VND
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Quantity)
+							</td>
+							<td>
+								@currentTotal VND
+							</td>
+						</tr>
+					}
+
+				</table>
+				<h4 style="text-align: right">Tổng tiền đơn hàng:@total VND </h4>
+
+			</div>
+			<div>
+				<a class="btn btn-primary" href="@Url.Action("Index")">Quay về</a>
+			</div>
+		</div>
+</div>

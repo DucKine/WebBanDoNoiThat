@@ -1,0 +1,88 @@
+﻿@model Model.Contact
+@{
+    ViewBag.Title = "Liên Hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section footer{
+	<script src="~/Asset/FrontEnd/js/Contact.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoNgWYN4FwpFh5xlI7iuRLLS6umBS4MTw&callback=initMap">
+	</script>
+}
+
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i></a></li>
+            <li><a href="/">Trang Chủ</a></li>
+            <li class="active">Liên Hệ</li>
+        </ol>
+    </div>
+</div>
+<!-- breadcrumb end -->
+<!-- map-area start -->
+<div class="map-area">
+    <div class="container">
+	    <div>
+             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.6715835529994!2d105.6164551!3d21.125655599999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134f80b21e29019%3A0x23751f4710d7e0f7!2zVOG7pyBi4bq_cCBI4buTbmcgTmfhu41j!5e0!3m2!1svi!2s!4v1569818119363!5m2!1svi!2s" width="1200" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+
+    </div>
+</div>
+<!-- map-area end -->
+<!-- contact-area start -->
+<div class="contact-area ptb-60">
+    <div class="container">
+        <div class="row">
+            <!-- contact-info start -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="contact-info">
+                    <h3>Thông Tin Liên Hệ</h3>
+                    <ul>
+                        <li>
+                            <i class="fa fa-map-marker"></i> <strong>Địa Chỉ</strong>
+                           Hát Môn-Phúc Thọ-Hà Nội
+                        </li>
+                        <li>
+                            <i class="fa fa-mobile"></i> <strong>Số Điện Thoại</strong>
+                            0989.318.744
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope"></i> <strong>Email</strong>
+                            <a href="mailto:tubephongngoc@gmail.com">tubephongngoc@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- contact-info end -->
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="contact-form">
+                    <h3><i class="fa fa-envelope-o"></i> Gửi Tin Nhắn Liên Hệ</h3>
+                    <div class="row">
+                        <form method="post" id="FromContact">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input name="name" id="name" type="text" placeholder="Full Name " />
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input name="email" id="email" type="email" placeholder="Email " />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input name="phone" id="phone" type="text" placeholder="Phone" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                <button type="submit" id="btnSend" style="background-color:#ffae00;border:none;padding:10px;color:black;width:100px;margin-top:10px;margin-left:200px" ;>Gửi</button>
+
+                            </div>
+                        </form>
+                        <p class="form-messege"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact-area end -->
+<!-- service-area start -->
+
+

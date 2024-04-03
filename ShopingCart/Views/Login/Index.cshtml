@@ -1,0 +1,64 @@
+﻿@model Model.LoginModel
+@{
+	ViewBag.Title = "Đăng Nhập";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Shop</a></li>
+			<li class="active">Đăng Nhập</li>
+		</ol>
+	</div>
+</div>
+<!-- breadcrumb end -->
+<!-- login-area start -->
+<!-- Content   ================================================== -->
+<div class="user-login pb-60">
+	<div class="container">
+		<div class="row">
+			<div class="centered-title text-center">
+				<h2>Đăng Nhập</h2>
+				<div class="clear"></div>
+                <em>Hãy đăng nhập  để bắt đầu mua những sản phẩm mà bạn yêu thích</em>
+			</div>
+			<div class="clear"></div>
+			<div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
+				<div class="row">
+					<form action="#" method="post" class="login-form">
+						@Html.ValidationSummary(false, "", "error")
+						<p class="form-row pd-right">
+							<label for="username">Tên Tài Khoản  <span class="required">*</span></label>
+							@Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus" })
+						</p>
+						<p class="form-row pd-left">
+							<label for="password">Mật Khẩu <span class="required">*</span></label>
+							@Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user" })
+						</p>
+						<p class="form-row ">
+							<input type="submit" value="Đăng Nhập" name="login" class="theme-button marL0">
+							<label class="inline" for="rememberme">
+								@Html.CheckBoxFor(model => model.RememberMe)
+							</label>
+						</p>
+						<p class="lost_password">
+                            @Html.ActionLink("Quên Mật Khẩu ?","ForgotPassWord","Login")
+						</p>
+					</form>
+				</div>
+			</div>
+			<!-- /.col-md-6 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container -->
+</div>
+<!-- #content -->
+<!-- login-area end -->
+<!-- service-area start -->
+
+

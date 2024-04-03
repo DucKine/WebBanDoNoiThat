@@ -1,0 +1,133 @@
+﻿
+@model Model.News
+@{
+    ViewBag.Title = "Chi Tiết Tin Tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li><a href="">Tin Tức</a></li>
+            <li class="active">Chi Tiết Tin Tức</li>
+        </ol>
+    </div>
+</div>
+<!-- breadcrumb end -->
+<!-- shop-area start -->
+<div class="blog-area">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-9 col-sm-9">
+                <div class="blog-wrapper blog-main mb-40">
+                    <div class="blog-img">
+                        <img alt="" src="@Model.Images">
+                    </div>
+                    <div class="blog-info">
+                        <h3><a href="#">@Model.Summary</a></h3>
+                        <div class="blog-meta blog-large">
+                            Ngày Đăng
+                            <span><a href="#"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i> @Model.CreateDate</a></span>
+
+                        </div>
+                        <p>
+                            @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                        </p>
+
+                        @*@Model.Content*@
+
+                    </div>
+                    @*<h3 class="total-comments mb-30 pb-15">4 comments</h3>
+                        <ul class="media-list comment-list mt-30">
+                            <!-- Comment Item start-->
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img alt="Jonathon Doe" src="img/blog/commenter-1.jpg" class="avatar">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="comment-info">
+                                        <h4 class="author-name">Salim Rana</h4>
+                                        <div class="comment-meta">
+                                            <a href="#" class="comment-report-link">Report</a>
+                                            <a href="#" class="comment-reply-link">Reply</a>
+                                        </div>
+                                    </div>
+                                    <p>Risus et cubilia lacus vestibulum conubia parturient scelerisque tincidunt ac habitant libero duis sagittis vestibulum dolor venenatis.Nostra cras in dis in a dignissim est in per sem consectetur.</p>
+                                    <!--  second level Comment start-->
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img alt="Natalie Portman" src="img/blog/commenter-2.jpg" class="avatar">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="comment-info">
+                                                <h4 class="author-name">Anik Islam</h4>
+                                                <div class="comment-meta">
+                                                    <a href="#" class="comment-report-link">Report</a>
+                                                    <a href="#" class="comment-reply-link">Reply</a>
+                                                </div>
+                                            </div>
+                                            <p>Risus et cubilia lacus vestibulum conubia parturient scelerisque tincidunt ac habitant libero duis sagittis.</p>
+                                        </div>
+                                    </div>
+                                    <!-- second level Comment end -->
+                                    <!--  second level Comment start-->
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img alt="Jonathon Doe" src="img/blog/commenter-3.jpg" class="avatar">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="comment-info">
+                                                <h4 class="author-name">BM Rafiq</h4>
+                                                <div class="comment-meta">
+                                                    <a href="#" class="comment-report-link">Report</a>
+                                                    <a href="#" class="comment-reply-link">Reply</a>
+                                                </div>
+                                            </div>
+                                            <p>Risus et cubilia lacus vestibulum conubia parturient scelerisque tincidunt ac habitant libero duis sagittis.</p>
+                                        </div>
+                                    </div>
+                                    <!-- second level Comment end -->
+                                </div>
+                            </li>
+                            <!-- End Comment Item -->
+                            <!-- Comment Item start-->
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img alt="Michael Ethan" src="img/blog/commenter-4.jpg" class="avatar">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="comment-info">
+                                        <h4 class="author-name">Ashim Rana</h4>
+                                        <div class="comment-meta">
+                                            <a href="#" class="comment-report-link">Report</a>
+                                            <a href="#" class="comment-reply-link">Reply</a>
+                                        </div>
+                                    </div>
+                                    <p class="ta">Risus et cubilia lacus vestibulum conubia parturient scelerisque tincidunt ac habitant libero duis sagittis.</p>
+                                </div>
+                            </li>
+                            <!-- End Comment Item -->
+                        </ul>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- shop-area end -->
+<!-- brand-area start -->
+
+@{Html.RenderAction("ShowProject", "Home");}
+<!-- brand-area end -->
+<!-- service-area start -->

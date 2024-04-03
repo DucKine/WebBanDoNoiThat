@@ -1,0 +1,147 @@
+﻿@using Model;
+@model List<Model.Category>
+	@{ 
+            var user = (User)Session["User"];
+	}
+
+	<header class="header-pos">
+		<div style="float:right;width:300px;position:relative;position:absolute;top:50px; right: 100px;z-index: 9999">
+			<div class="alert alert-success" hidden>
+
+				@if (TempData["DataSuccess"] != null)
+				{
+					@TempData["DataSuccess"]
+				}
+				else
+				{
+					<strong>Lưu thành công!</strong>
+				}
+			</div>
+			<div class="alert alert-danger" hidden>
+				<strong>Đã có lỗi xảy ra</strong>
+			</div>
+		</div>
+		<div class="header-area header-middle">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-2 col-sm-3 col-xs-12">
+						<div class="logo">
+							<a href="/"><img style="margin-top:-20px; width:150px" src="~/Asset/FrontEnd/img/logo/logo_website.png" alt=""></a>
+						</div>
+					</div>
+                    <div class="col-md-10 col-sm-9 col-xs-12 text-right xs-center">
+                        <div class="main-menu display-inline hidden-sm hidden-xs">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a href="/">Trang Chủ</a>
+                                    </li>
+                                    <li>
+                                        <a href="/gioi-thieu">Giới Thiệu</a>
+                                    </li>
+                                    <li>
+                                        <a href="/san-pham">Sản Phẩm</a>
+                                    </li>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        var url = "/danh-muc-san-pham/" + item.Slug + "-" + item.ID;
+                                        <li>
+                                            <a href="@url">@item.Name</a>
+                                            @Html.Action("LoadChilden", "Home", new { parentID = item.ID })
+                                        </li>
+                                    }
+                                    @*<li>
+            <a href="shop.html">Phòng Khách</a>
+            <ul class="submenu">
+                <li><a href="index.html">home version 1</a></li>
+                <li><a href="index-2.html">home version 2</a></li>
+                <li><a href="index-3.html">home version 3</a></li>
+                <li><a href="index-4.html">home version 4</a></li>
+            </ul>
+        </li>*@
+
+                                    <li>
+                                        <a href="/lien-he/">Liên Hệ</a>
+                                    </li>
+                                    <li>
+                                        <a href="/du-an/">Dự Án</a>
+                                    </li>
+                                </ul>
+
+                            </nav>
+                        </div>
+
+                        <div class="search-block-top display-inline">
+                            @if(@user != null)
+                            {
+
+                                <div><p style="font-weight:700;color:#2c2c2c">Chào!@user.FullName| <a style="color:#2c2c2c" href="@Url.Action("LogOut","Login")">Đăng xuất</a></p></div>
+                            }
+                            else
+                            {
+
+                                <div><p style="font-weight:700;color:#2c2c2c"><a style="color:#2c2c2c" href="@Url.Action("Index","Login")">Đăng nhập</a> | <a style="color:#2c2c2c" href="@Url.Action("Index","Resgiter")">Đăng ký</a></p></div>
+                            }
+
+
+                        </div>
+                        <div class="search-block-top display-inline">
+                            <div class="icon-search"></div>
+                            <div class="toogle-content">
+
+                     
+                                    @using (Html.BeginForm("ResultSearch", "Search", FormMethod.Get, new { @id ="searchbox" }))
+                                    {
+                                        <input type="text" name="searchString" placeholder="Tìm Kiếm Sản Phẩm..." />
+                                        <button class="button-search"></button>
+
+                                    }
+                              
+
+
+                                </div>
+                        </div>
+                        @{ Html.RenderAction("HeaderCart", "Home");}
+                    </div>
+				</div>
+			</div>
+		</div>
+		<div class="mobile-menu-area visible-sm visible-xs">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="mobile-menu">
+							<nav id="mobile-menu-active">
+                                <ul>
+                                    <li>
+                                        <a href="">Trang Chủ</a>
+                                    </li>
+                                    <li>
+                                        <a href="/gioi-thieu">Giới Thiệu</a>
+                                    </li>
+                                    <li>
+                                        <a href="/san-pham">Sản Phẩm</a>
+                                    </li>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        var url = "/danh-muc-san-pham/" + item.Slug + "-" + item.ID;
+                                        <li>
+                                            <a href="@url">@item.Name</a>
+                                            @Html.Action("LoadChilden", "Home", new { parentID = item.ID })
+                                        </li>
+                                    }
+                                    <li>
+                                        <a href="">Liên Hệ</a>
+                                    </li>
+
+
+                                </ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>

@@ -1,0 +1,198 @@
+﻿@model PagedList.IPagedList<Model.Product>
+@using Model;
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListCategory = (List<Model.Category>)ViewBag.ListCategory;
+}
+@section footer{
+    <script src="~/Asset/FrontEnd/js/CartJs.js"></script>
+}
+<div class="space-custom"></div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li><a href="#">Trang Chủ</a></li>
+            <li class="active">Sản Phẩm</li>
+        </ol>
+    </div>
+</div>
+<!-- breadcrumb end -->
+<!-- shop-area start -->
+<div class="shop-area">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-3 col-sm-4">
+                <div class="column">
+                    <h2 class="title-block">Danh Mục Sản Phẩm</h2>
+                    @foreach (var item in ListCategory.Where(x => x.ParentID == null))
+                    {
+                        var url = "/danh-muc-san-pham/" + item.Slug + "-" + item.ID;
+                        var child = ListCategory.Where(x => x.ParentID == item.ID);
+                        <div class="sidebar-widget">
+                            <h3 class="sidebar-title"><a href="@url">@item.Name</a> </h3>
+                            @if (child.Count() > 0)
+                            {
+                                <ul class="sidebar-menu">
+                                    @foreach (var submenu in child)
+                                    {
+                                        <li><a href="@url">@submenu.Name</a></li>
+                                    }
+                                </ul>
+                            }
+
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            @if (Model.Count > 0)
+            {
+                <div class="col-md-9 col-sm-8">
+                    @*@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" placeholder="Nhập Tên Sản Phẩm..." name="searchString" value="@ViewBag.searchString" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                }*@
+                    <h2 class="page-heading mt-40">
+                        <span class="cat-name">Tất Cả Sản Phẩm</span>
+                        <span class="heading-counter">Có Tất Cả @Model.Count() Sản Phẩm</span>
+                    </h2>
+                    <div class="shop-page-bar">
+                        <div>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="row reload-wish">
+                                        @foreach (var item in Model)
+                                        {
+                                            var url = "/chi-tiet-san-pham/" + item.Slug + "-" + item.Id;
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="product-wrapper mb-40">
+                                                    <div class="product-img">
+
+                                                        <figure>
+                                                            <img src="@item.Images" alt="@item.Name" />
+                                                        </figure>
+
+                                                    </div>
+                                                    <div class="product-content">
+                                                        <div class="pro-title">
+                                                            <h3><a href="product-details.html">@item.Name</a></h3>
+                                                        </div>
+                                                        <div class="price-reviews">
+                                                            <div class="price-box">
+
+                                                                @if (item.Sale_Price != null)
+                                                                {
+                                                                    <span class="old-price product-price">
+                                                                        Giá : @Convert.ToDecimal(item.Price).ToString("#,##0")
+
+                                                                        VND
+                                                                    </span> <span class="price product-price">Giá KM:@Convert.ToDecimal(item.Sale_Price).ToString("#,##0") VND</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="price product-price">Giá:@Convert.ToDecimal(item.Price).ToString("#,##0") VND</span>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                        <a href="@url" class="buttonss detail_button" title="Xem chi tiết">
+                                                            Xem chi tiết
+                                                        </a>
+                                                        <a class="buttonss Addtocart" data-id="@item.Id">
+                                                            Đặt Mua
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+
+                                <div style="text-align:center" class="dlink">
+                                    Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+                                </div>
+
+                                @*<div class="content-sortpagibar">*@
+                                @*<div class="product-count display-inline">Showing 1 - 12 of 13 items</div>*@
+                                @*<ul class="shop-pagi display-inline">
+                                <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>*@
+
+
+
+
+                                @*<div class="selector-field f-right">
+                                <form action="#">
+                                    <button class="compare">Compare (1)</button>
+                                </form>
+                            </div>*@
+                                @*</div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*}
+            else
+            {
+                using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" placeholder="Nhập Tên Sản Phẩm..." name="searchString" value="@ViewBag.searchString" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                }*@
+                @*<div class="row">
+                <div class="col-md-12">
+                    <p style="text-align:center">Không Tìm Thấy Sản Phẩm Thích Hợp</p>
+                </div>
+            </div>*@
+
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="text-align:center">Không Có Sản Phẩm</p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- shop-area end -->
+<!-- brand-area start -->
+@{Html.RenderAction("ShowProject", "Home");}
+<!-- brand-area end -->
+<!-- service-area start -->
