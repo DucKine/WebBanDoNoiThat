@@ -58,57 +58,6 @@ namespace ShopingCart.Controllers
 			    var result=	_orderDetailService.Inserts(order,orderDetails);
                 if (result > 0)
                 {
-                    string header = System.IO.File.ReadAllText(Server.MapPath(@"~/App_Start/header.txt"));
-                    string footer = System.IO.File.ReadAllText(Server.MapPath(@"~/App_Start/footer.txt"));
-                    string main = String.Format(@"<h2 class='title'>Nội Thất Hồng Ngọc -Xác Nhận Đơn Hàng</h2>
-                <p>
-					<b>Họ tên người nhận:</b>
-					<span>{0}</span>
-				</p>
-				<p>
-					<b>Email:</b>
-					<span>{1}</span>
-				</p>
-				<p>
-					<b>SĐT:</b>
-					<span>{2}</span>
-				</p>
-				<p>
-					<b>Địa chỉ:</b>
-					<span>{3}</span>
-				</p>
-				<p>
-					<b>Ngày mua:</b>
-					<span>{4}</span>
-				</p>", currentUser.FullName, currentUser.Email  , currentUser.Phone, currentUser.Address, DateTime.Now);
-                    main += @"<table class='table text-center'>
-					<thead>
-						<tr>
-							<th>Sản phẩm</th>
-							<th>Đơn giá</th>
-							<th>Số lượng</th>
-							<th>Thành tiền</th>
-                            <th>Tổng Tiền</th>
-						</tr>
-					</thead>
-					<tbody>";
-                    foreach (var item in cart)
-                    {
-                        var total = 0;
-                        var money = (item.Quantity * item.Product.Price);
-                        var price = item.Product.Price = (item.Product.Sale_Price != null && item.Product.Sale_Price < item.Product.Price) ? float.Parse(item.Product.Sale_Price.ToString()) : float.Parse(item.Product.Price.ToString());
-                        total += (int)money;
-                        main += "    <tr>";
-                        main += "	 <td>" + item.Product.Name + "</td>";
-                        main += "    <td>" + item.Product.Price + " VNĐ</td>";
-                        main += "    <td>" + item.Quantity + "</td>";
-                        main += "    <td>" + (item.Quantity * price) + "</td>";
-                        main += "    <td>" + total + "</td>";
-                        main += "</tr>";
-                    }
-                    main += @"</tbody>
-				</table>";
-                    HelpMail.SendEmail(currentUser.Email, "danhminhhm@gmail.com", "danhngoc99", "[Nội Thất Hồng Ngọc]_Đơn hàng", header + main + footer);
                     TempData["message"] = "Added";
                     TempData["DataSuccess"] = "Đặt hàng thành công";
 					Session[Common.CommonConstants.SESSION_CART] = null;
